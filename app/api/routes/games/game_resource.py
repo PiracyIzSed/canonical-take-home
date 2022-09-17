@@ -20,11 +20,12 @@ from app.models.schemas.games import (
 )
 from app.resources import strings
 from app.services.games import check_game_exists, get_games_by_filters
+from fastapi import APIRouter
 
-sub_router = APIRouter()
+router = APIRouter()
 
 
-@sub_router.get("", response_model=ListOfGamesInResponse, name="games:list-games")
+@router.get("", response_model=ListOfGamesInResponse, name="games:list-games")
 async def list_games(
     game_filters: GameFilters = Depends(get_game_filters),
     db: AsyncSession = Depends(get_db)
@@ -33,7 +34,7 @@ async def list_games(
     return ListOfGamesInResponse(games=games, count=len(games))
 
 
-@sub_router.post(
+@router.post(
     "",
     status_code=status.HTTP_201_CREATED,
     response_model=GameInResponse,
@@ -55,15 +56,14 @@ async def create_new_game(
     return GameInResponse(game=game)
 
 
-@sub_router.get("/{id}", response_model=GameInResponse, name="games:get-game")
+@router.get("/{id}", response_model=GameInResponse, name="games:get-game")
 async def get_by_id(
     game: GamesRepository = Depends(get_game_by_id),
-    db: AsyncSession = Depends(get_db)
 ) -> GameInResponse:
-    return GameInResponse(game=game)
+    return GameInResponse(game=Game.from_orm(game))
 
 
-@sub_router.patch(
+@router.patch(
     "/{id}",
     response_model=GameInResponse,
     name="games:update-game",
@@ -83,7 +83,7 @@ async def update_game_by_id(
     
 
 
-@sub_router.delete(
+@router.delete(
     "/{id}",
     status_code=status.HTTP_204_NO_CONTENT,
     name="games:delete-game",

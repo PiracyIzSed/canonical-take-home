@@ -14,7 +14,7 @@ class GameInResponse(RWSchema):
 
 class GameInCreate(RWSchema):
     title: str
-    age_rating: int
+    age_rating: int = Field(..., ge=1)
     publisher: str
     description: str
 

@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from httpx import AsyncClient
 from starlette import status
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.db.errors import EntityDoesNotExist
 from app.db.repositories import games as games_repo
 from app.db.repositories.games import GamesRepository
 from app.models.schemas.games import GameInResponse, ListOfGamesInResponse
