@@ -6,7 +6,7 @@ from app.core.settings.app import AppSettings
 
 class DevAppSettings(AppSettings):
     debug: bool = True
-    database_url: PostgresDsn = "sqlite+aiosqlite:///file_path"
+    database_url: str = "sqlite+aiosqlite:///:memory:"
 
     title: str = "Dev"
 
