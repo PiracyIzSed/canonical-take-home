@@ -41,3 +41,4 @@ def main(
 
 app = typer.Typer(callback=main, invoke_without_command=True, no_args_is_help = True, pretty_exceptions_show_locals=False)
 app.add_typer(users_app, name="users")
+app.add_typer(games_app, name="games")

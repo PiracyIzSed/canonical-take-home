@@ -28,7 +28,7 @@ class CLIApp:
             self.console.print_json(e.body)
             raise typer.Exit(1)
 
-    @property
+    @contextlib.contextmanager
     def games_api(self):
         try:
             with cannonical.ApiClient(configuration=self.config) as api_client:

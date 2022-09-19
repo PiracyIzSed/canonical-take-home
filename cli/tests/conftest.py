@@ -21,8 +21,23 @@ def test_user_response():
             "age": 14,
             "name": "jeff",
             "email": "jeff@email.com",
-            "created_at": "2022-09-19T13:48:07.892930Z",
-            "updated_at": "2022-09-19T13:48:07.892930Z",
+            "createdAt": "2022-09-19T13:48:07.892930Z",
+            "updatedAt": "2022-09-19T13:48:07.892930Z",
+            "id": 1
+        }
+    })
+
+@pytest.fixture
+def test_game_response():
+    return copy.deepcopy({
+        "game": {
+            "ageRating": 14,
+            "title": "test-game-1",
+            "description": "This is a test game",
+            "publisher": "Test Publisher",
+            "logoUrl": "https://image-game.com/game.png",
+            "createdAt": "2022-09-19T13:48:07.892930Z",
+            "updatedAt": "2022-09-19T13:48:07.892930Z",
             "id": 1
         }
     })
