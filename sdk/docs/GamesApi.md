@@ -1,4 +1,4 @@
-# cannonical.GamesApi
+# canonical.GamesApi
 
 All URIs are relative to *http://localhost*
 
@@ -21,21 +21,21 @@ Games:Create-Game
 
 ```python
 import time
-import cannonical
-from cannonical.api import games_api
-from cannonical.model.body_games_create_game_api_games_post import BodyGamesCreateGameApiGamesPost
-from cannonical.model.game_in_response import GameInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import games_api
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.game_in_response import GameInResponse
+from canonical.model.body_games_create_game_api_games_post import BodyGamesCreateGameApiGamesPost
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = games_api.GamesApi(api_client)
     body_games_create_game_api_games_post = BodyGamesCreateGameApiGamesPost(
@@ -44,6 +44,7 @@ with cannonical.ApiClient() as api_client:
             age_rating=1.0,
             publisher="publisher_example",
             description="description_example",
+            logo_url="logo_url_example",
         ),
     ) # BodyGamesCreateGameApiGamesPost | 
 
@@ -52,7 +53,7 @@ with cannonical.ApiClient() as api_client:
         # Games:Create-Game
         api_response = api_instance.games_create_game_api_games_post(body_games_create_game_api_games_post)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling GamesApi->games_create_game_api_games_post: %s\n" % e)
 ```
 
@@ -96,19 +97,19 @@ Games:Delete-Game
 
 ```python
 import time
-import cannonical
-from cannonical.api import games_api
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import games_api
+from canonical.model.http_validation_error import HTTPValidationError
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = games_api.GamesApi(api_client)
     id = 1.0 # int | 
@@ -117,7 +118,7 @@ with cannonical.ApiClient() as api_client:
     try:
         # Games:Delete-Game
         api_instance.games_delete_game_api_games_id_delete(id)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling GamesApi->games_delete_game_api_games_id_delete: %s\n" % e)
 ```
 
@@ -161,20 +162,20 @@ Games:Get-Game
 
 ```python
 import time
-import cannonical
-from cannonical.api import games_api
-from cannonical.model.game_in_response import GameInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import games_api
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.game_in_response import GameInResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = games_api.GamesApi(api_client)
     id = 1.0 # int | 
@@ -184,7 +185,7 @@ with cannonical.ApiClient() as api_client:
         # Games:Get-Game
         api_response = api_instance.games_get_game_api_games_id_get(id)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling GamesApi->games_get_game_api_games_id_get: %s\n" % e)
 ```
 
@@ -228,20 +229,20 @@ Games:List-Games
 
 ```python
 import time
-import cannonical
-from cannonical.api import games_api
-from cannonical.model.list_of_games_in_response import ListOfGamesInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import games_api
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.list_of_games_in_response import ListOfGamesInResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = games_api.GamesApi(api_client)
     publisher = "publisher_example" # str |  (optional)
@@ -255,7 +256,7 @@ with cannonical.ApiClient() as api_client:
         # Games:List-Games
         api_response = api_instance.games_list_games_api_games_get(publisher=publisher, title=title, limit=limit, offset=offset)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling GamesApi->games_list_games_api_games_get: %s\n" % e)
 ```
 
@@ -302,21 +303,21 @@ Games:Update-Game
 
 ```python
 import time
-import cannonical
-from cannonical.api import games_api
-from cannonical.model.body_games_update_game_api_games_id_patch import BodyGamesUpdateGameApiGamesIdPatch
-from cannonical.model.game_in_response import GameInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import games_api
+from canonical.model.body_games_update_game_api_games_id_patch import BodyGamesUpdateGameApiGamesIdPatch
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.game_in_response import GameInResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = games_api.GamesApi(api_client)
     id = 1.0 # int | 
@@ -334,7 +335,7 @@ with cannonical.ApiClient() as api_client:
         # Games:Update-Game
         api_response = api_instance.games_update_game_api_games_id_patch(id, body_games_update_game_api_games_id_patch)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling GamesApi->games_update_game_api_games_id_patch: %s\n" % e)
 ```
 

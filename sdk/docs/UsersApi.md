@@ -1,4 +1,4 @@
-# cannonical.UsersApi
+# canonical.UsersApi
 
 All URIs are relative to *http://localhost*
 
@@ -21,21 +21,21 @@ Users:Create-User
 
 ```python
 import time
-import cannonical
-from cannonical.api import users_api
-from cannonical.model.body_users_create_user_api_users_post import BodyUsersCreateUserApiUsersPost
-from cannonical.model.user_in_response import UserInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import users_api
+from canonical.model.body_users_create_user_api_users_post import BodyUsersCreateUserApiUsersPost
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.user_in_response import UserInResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     body_users_create_user_api_users_post = BodyUsersCreateUserApiUsersPost(
@@ -51,7 +51,7 @@ with cannonical.ApiClient() as api_client:
         # Users:Create-User
         api_response = api_instance.users_create_user_api_users_post(body_users_create_user_api_users_post)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling UsersApi->users_create_user_api_users_post: %s\n" % e)
 ```
 
@@ -95,19 +95,19 @@ Users:Delete-User
 
 ```python
 import time
-import cannonical
-from cannonical.api import users_api
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import users_api
+from canonical.model.http_validation_error import HTTPValidationError
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1.0 # int | 
@@ -116,7 +116,7 @@ with cannonical.ApiClient() as api_client:
     try:
         # Users:Delete-User
         api_instance.users_delete_user_api_users_id_delete(id)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling UsersApi->users_delete_user_api_users_id_delete: %s\n" % e)
 ```
 
@@ -160,20 +160,20 @@ Users:Get-User
 
 ```python
 import time
-import cannonical
-from cannonical.api import users_api
-from cannonical.model.user_in_response import UserInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import users_api
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.user_in_response import UserInResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1.0 # int | 
@@ -183,7 +183,7 @@ with cannonical.ApiClient() as api_client:
         # Users:Get-User
         api_response = api_instance.users_get_user_api_users_id_get(id)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling UsersApi->users_get_user_api_users_id_get: %s\n" % e)
 ```
 
@@ -227,20 +227,20 @@ Users:List-Users
 
 ```python
 import time
-import cannonical
-from cannonical.api import users_api
-from cannonical.model.list_of_users_in_response import ListOfUsersInResponse
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import users_api
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.list_of_users_in_response import ListOfUsersInResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     name = "name_example" # str |  (optional)
@@ -254,7 +254,7 @@ with cannonical.ApiClient() as api_client:
         # Users:List-Users
         api_response = api_instance.users_list_users_api_users_get(name=name, age=age, limit=limit, offset=offset)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling UsersApi->users_list_users_api_users_get: %s\n" % e)
 ```
 
@@ -301,21 +301,21 @@ Users:Update-User
 
 ```python
 import time
-import cannonical
-from cannonical.api import users_api
-from cannonical.model.user_in_response import UserInResponse
-from cannonical.model.body_users_update_user_api_users_id_patch import BodyUsersUpdateUserApiUsersIdPatch
-from cannonical.model.http_validation_error import HTTPValidationError
+import canonical
+from canonical.api import users_api
+from canonical.model.http_validation_error import HTTPValidationError
+from canonical.model.user_in_response import UserInResponse
+from canonical.model.body_users_update_user_api_users_id_patch import BodyUsersUpdateUserApiUsersIdPatch
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
-configuration = cannonical.Configuration(
+configuration = canonical.Configuration(
     host = "http://localhost"
 )
 
 
 # Enter a context with an instance of the API client
-with cannonical.ApiClient() as api_client:
+with canonical.ApiClient() as api_client:
     # Create an instance of the API class
     api_instance = users_api.UsersApi(api_client)
     id = 1.0 # int | 
@@ -331,7 +331,7 @@ with cannonical.ApiClient() as api_client:
         # Users:Update-User
         api_response = api_instance.users_update_user_api_users_id_patch(id, body_users_update_user_api_users_id_patch)
         pprint(api_response)
-    except cannonical.ApiException as e:
+    except canonical.ApiException as e:
         print("Exception when calling UsersApi->users_update_user_api_users_id_patch: %s\n" % e)
 ```
 

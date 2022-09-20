@@ -1,6 +1,6 @@
 import typer
 import orjson
-from cannonical.models import GameInCreate, GameInUpdate, BodyGamesCreateGameApiGamesPost, BodyGamesUpdateGameApiGamesIdPatch
+from canonical.models import GameInCreate, GameInUpdate, BodyGamesCreateGameApiGamesPost, BodyGamesUpdateGameApiGamesIdPatch, Game
 from rich import print_json, print
 
 app = typer.Typer(invoke_without_command=True, no_args_is_help = True, pretty_exceptions_show_locals=False)
@@ -12,29 +12,30 @@ def create(
     age_rating: int = typer.Option(0, "--age-rating", prompt=True, help="Age Rating of the game"), 
     publisher: str = typer.Option("", "--publisher", prompt=True, help="Publisher of the game"),
     description: str = typer.Option("", "--description", prompt=True, help="Description of the game"),
-    logo_url: str = typer.Option("", "--logo-url", prompt=True, help="Logo URL for the game")
+    logo_url: str = typer.Option(None, "--logo-url", help="Logo URL for the game")
 ):
-    print("Creating the user...")
+    print("Creating the game...")
     with ctx.obj.games_api() as api:
         game = GameInCreate(title=title, age_rating=age_rating, publisher=publisher, description=description, logo_url=logo_url)
         body = BodyGamesCreateGameApiGamesPost(game=game) 
         response = api.games_create_game_api_games_post(body) 
+
         print_json(
             orjson.dumps(response.to_dict(), option=orjson.OPT_INDENT_2).decode("utf-8")
         )
 
 @app.command(help="Delete a game")
-def delete(ctx: typer.Context, force: bool = typer.Option(False, "--force", "-f"), id: int = typer.Option(..., "--id", "-i", help="Get user information by id")):
+def delete(ctx: typer.Context, force: bool = typer.Option(False, "--force", "-f"), id: int = typer.Option(..., "--id", "-i", help="Get game information by id")):
     if not force:
         typer.confirm("Are you sure you want to delete it?", abort=True)
-    print("Deleting the user...")
+    print("Deleting the game...")
     with ctx.obj.games_api() as api:
         api.games_delete_game_api_games_id_delete(id) 
         print("Game deleted successfully")
 
 
 @app.command(help="Get a game's information")
-def get(ctx: typer.Context, id: int = typer.Option(..., "--id", "-i", help="Get user information by id")):
+def get(ctx: typer.Context, id: int = typer.Option(..., "--id", "-i", help="Get game information by id")):
     with ctx.obj.games_api() as api:
         response =api.games_get_game_api_games_id_get(id) 
         print_json(

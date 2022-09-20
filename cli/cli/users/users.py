@@ -2,7 +2,7 @@ import orjson
 import typer
 
 from . import validator
-from cannonical.models import UserInCreate, UserInUpdate, BodyUsersCreateUserApiUsersPost, BodyUsersUpdateUserApiUsersIdPatch
+from canonical.models import UserInCreate, UserInUpdate, BodyUsersCreateUserApiUsersPost, BodyUsersUpdateUserApiUsersIdPatch
 from rich import print_json, print
 
 app = typer.Typer(invoke_without_command=True, no_args_is_help = True, pretty_exceptions_show_locals=False)

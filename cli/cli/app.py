@@ -1,22 +1,22 @@
 import contextlib
 from typing_extensions import Self
-import cannonical
-from cannonical.api import users_api, games_api
+import canonical
+from canonical.api import users_api, games_api
 from rich.console import Console
-from cannonical.exceptions import ApiValueError, ApiTypeError, ApiAttributeError, ApiException
+from canonical.exceptions import ApiValueError, ApiTypeError, ApiAttributeError, ApiException
 from cli.config import Config
 import typer
 
 class CLIApp:
     def __init__(self, config: Config) -> Self:
-        self.config = cannonical.Configuration(host=config.api_url)
+        self.config = canonical.Configuration(host=config.api_url)
         self.console: Console = Console()
     
 
     @contextlib.contextmanager
     def users_api(self):
         try:
-            with cannonical.ApiClient(configuration=self.config) as api_client:
+            with canonical.ApiClient(configuration=self.config) as api_client:
                 yield users_api.UsersApi(api_client)
             raise typer.Exit()
         except (ApiValueError, ApiTypeError, ApiAttributeError) as e :
@@ -31,7 +31,7 @@ class CLIApp:
     @contextlib.contextmanager
     def games_api(self):
         try:
-            with cannonical.ApiClient(configuration=self.config) as api_client:
+            with canonical.ApiClient(configuration=self.config) as api_client:
                 yield games_api.GamesApi(api_client)
             raise typer.Exit()
         except (ApiValueError, ApiTypeError, ApiAttributeError) as e :

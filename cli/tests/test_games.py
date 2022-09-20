@@ -22,6 +22,25 @@ def test_can_create_game(runner, app, server_url, test_game_response):
     assert "test-game-1" in result.stdout
 
 @httpretty.activate
+def test_can_create_game_without_logo(runner, app, server_url, test_game_response):
+    httpretty.register_uri(
+        method="POST",
+        uri=f"{server_url}/api/games",
+        body=json.dumps(test_game_response),
+        status=201
+    )
+    result = runner.invoke(app, [
+        "games", 
+        "create", 
+        "--title", "test-game-1", 
+        "--publisher",  "Test Publisher", 
+        "--age-rating", 17, 
+        "--description", "This is a test game", 
+    ])
+    assert result.exit_code == 0, result.stdout
+    assert "test-game-1" in result.stdout
+
+@httpretty.activate
 def test_error_on_getting_non_existent_game(runner, app, server_url):
     non_existent_user_id = 99
     httpretty.register_uri(
