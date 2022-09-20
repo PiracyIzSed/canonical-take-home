@@ -9,6 +9,7 @@ from app.models.schemas.users import UserInResponse, User, ListOfUsersInResponse
 
 pytestmark = pytest.mark.asyncio
 
+
 async def test_user_can_not_create_users_with_same_username(
     app: FastAPI,
     client: AsyncClient,
@@ -20,18 +21,19 @@ async def test_user_can_not_create_users_with_same_username(
         "email": "jhon.doe@email.com",
     }
     response = await client.post(
-        app.url_path_for("users:create-user"),
-        json={ "user": user_dict }
+        app.url_path_for("users:create-user"), json={"user": user_dict}
     )
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
+
 async def test_users_can_be_created(
-    app: FastAPI, client: AsyncClient, 
+    app: FastAPI,
+    client: AsyncClient,
 ) -> None:
     user_data = {
         "name": "game-master-1",
         "age": 16,
-        "email": "game.master123@email.com"
+        "email": "game.master123@email.com",
     }
     try:
         response = await client.post(
@@ -55,10 +57,9 @@ async def test_cannot_fetch_or_update_non_existent_user(
     api_method: str,
     route_name: str,
 ) -> None:
-    response = await client.request(
-        api_method, app.url_path_for(route_name, id=11111)
-    )
+    response = await client.request(api_method, app.url_path_for(route_name, id=11111))
     assert response.status_code == status.HTTP_404_NOT_FOUND
+
 
 @pytest.mark.parametrize(
     "update_field, update_value",
@@ -90,25 +91,21 @@ async def test_can_delete_a_user(
     test_user: User,
     session: AsyncSession,
 ) -> None:
-    await client.delete(
-        app.url_path_for("users:delete-user", id=test_user.id)
-    )
+    await client.delete(app.url_path_for("users:delete-user", id=test_user.id))
     user = await session.get(UsersRepository, test_user.id)
     assert not user, f"Found the user after deleltion {user.name}"
+
 
 async def test_can_retrieve_user_by_id(
     app: FastAPI, client: AsyncClient, test_user: User
 ) -> None:
-    response = await client.get(
-        app.url_path_for("users:get-user", id=test_user.id)
-    )
+    response = await client.get(app.url_path_for("users:get-user", id=test_user.id))
     user = UserInResponse(**response.json())
     assert user.user.id == test_user.id
     assert user.user.name == test_user.name
 
-@pytest.mark.parametrize(
-    "age, result", ((24, 1), (17, 2))
-)
+
+@pytest.mark.parametrize("age, result", ((24, 1), (17, 2)))
 async def test_filtering_by_age(
     app: FastAPI,
     client: AsyncClient,
@@ -116,21 +113,20 @@ async def test_filtering_by_age(
     result: int,
     session: AsyncSession,
 ) -> None:
-    session.add(UsersRepository(
-            name="user-42", email="user-42@email.com", age=24
-        ))
+    session.add(UsersRepository(name="user-42", email="user-42@email.com", age=24))
     for i in range(2, 4):
-        session.add(UsersRepository(
-            name=f"user-{i}", email=f"user-{i}@email.com", age=17
-        ))
+        session.add(
+            UsersRepository(name=f"user-{i}", email=f"user-{i}@email.com", age=17)
+        )
     await session.commit()
-    
+
     response = await client.get(
         app.url_path_for("users:list-users"), params={"age": age}
     )
 
     users = ListOfUsersInResponse(**response.json())
     assert users.count == result
+
 
 async def test_list_users_with_limit_and_offset(
     app: FastAPI,
@@ -139,14 +135,10 @@ async def test_list_users_with_limit_and_offset(
 ) -> None:
 
     for i in range(5):
-        user = UsersRepository(
-            name=f"user-{i}", email=f"user-{i}@email.com", age=i
-        )
+        user = UsersRepository(name=f"user-{i}", email=f"user-{i}@email.com", age=i)
         session.add(user)
     await session.commit()
-    full_response = await client.get(
-        app.url_path_for("users:list-users")
-    )
+    full_response = await client.get(app.url_path_for("users:list-users"))
     all_users = ListOfUsersInResponse(**full_response.json())
 
     response = await client.get(

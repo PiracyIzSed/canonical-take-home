@@ -8,6 +8,7 @@ from app.models.schemas.rwschema import RWSchema
 DEFAULT_USERS_LIMIT = 20
 DEFAULT_USERS_OFFSET = 0
 
+
 class UserInCreate(RWSchema):
     name: str
     age: int = Field(..., ge=1)
@@ -17,6 +18,7 @@ class UserInCreate(RWSchema):
 class UserInResponse(RWSchema):
     user: User
 
+
 class UserInUpdate(BaseModel):
     email: Optional[EmailStr] = None
     age: Optional[int] = None
@@ -25,6 +27,7 @@ class UserInUpdate(BaseModel):
 class ListOfUsersInResponse(RWSchema):
     users: List[User]
     count: int
+
 
 class UserFilters(BaseModel):
     name: Optional[str] = None

@@ -15,7 +15,6 @@ from app.models.schemas.games import (
 from app.resources import strings
 
 
-
 def get_game_filters(
     publisher: Optional[str] = None,
     title: Optional[str] = None,
@@ -30,7 +29,9 @@ def get_game_filters(
     )
 
 
-async def get_game_by_id(id: int = Path(..., ge=1), db: AsyncSession = Depends(get_db)) -> GamesRepository:
+async def get_game_by_id(
+    id: int = Path(..., ge=1), db: AsyncSession = Depends(get_db)
+) -> GamesRepository:
     game = await db.get(GamesRepository, id)
     if not game:
         raise HTTPException(

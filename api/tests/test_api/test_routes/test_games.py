@@ -19,7 +19,7 @@ async def test_user_can_not_create_game_with_duplicated_title(
         "title": test_game.title,
         "ageRating": 18,
         "description": "¯\\_(ツ)_/¯",
-        "publisher": "Rockstart Studios"
+        "publisher": "Rockstart Studios",
     }
     response = await client.post(
         app.url_path_for("games:create-game"), json={"game": game}
@@ -28,7 +28,8 @@ async def test_user_can_not_create_game_with_duplicated_title(
 
 
 async def test_user_can_create_game(
-    app: FastAPI, client: AsyncClient, 
+    app: FastAPI,
+    client: AsyncClient,
 ) -> None:
     game_data = {
         "title": "Test Slug",
@@ -59,18 +60,14 @@ async def test_user_can_not_interact_with_non_existent_game(
     api_method: str,
     route_name: str,
 ) -> None:
-    response = await client.request(
-        api_method, app.url_path_for(route_name, id=11111)
-    )
+    response = await client.request(api_method, app.url_path_for(route_name, id=11111))
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
 async def test_user_can_retrieve_game_if_exists(
     app: FastAPI, client: AsyncClient, test_game: Game
 ) -> None:
-    response = await client.get(
-        app.url_path_for("games:get-game", id=test_game.id)
-    )
+    response = await client.get(app.url_path_for("games:get-game", id=test_game.id))
     game = GameInResponse(**response.json())
     assert game.game.id == test_game.id
     assert game.game.title == test_game.title
@@ -101,8 +98,8 @@ async def test_user_can_update_game(
 
     assert getattr(game.game, update_field) == update_value
 
-    assert game.game.dict(exclude={ update_field, "updated_at" }) == test_game.dict(
-        exclude={ update_field, "updated_at"}
+    assert game.game.dict(exclude={update_field, "updated_at"}) == test_game.dict(
+        exclude={update_field, "updated_at"}
     )
 
 
@@ -112,16 +109,12 @@ async def test_user_can_delete_a_game(
     test_game: Game,
     session: AsyncSession,
 ) -> None:
-    await client.delete(
-        app.url_path_for("games:delete-game", id=test_game.id)
-    )
+    await client.delete(app.url_path_for("games:delete-game", id=test_game.id))
     game = await session.get(GamesRepository, test_game.id)
     assert not game, f"Found the game after deleltion {game.title}"
 
 
-@pytest.mark.parametrize(
-    "publisher, result", (("Rockstar Studios", 1), ("Ubisoft", 2))
-)
+@pytest.mark.parametrize("publisher, result", (("Rockstar Studios", 1), ("Ubisoft", 2)))
 async def test_filtering_by_publisher(
     app: FastAPI,
     client: AsyncClient,
@@ -129,21 +122,25 @@ async def test_filtering_by_publisher(
     result: int,
     session: AsyncSession,
 ) -> None:
-    session.add(GamesRepository(
-        publisher="Rockstar Studios",
-        title="tmp-6",
-        description="tmp",
-        age_rating=17,
-    ))
-    for i in range(2, 4):
-        session.add(GamesRepository(
-            publisher="Ubisoft",
-            title=f"tmp-{i}",
+    session.add(
+        GamesRepository(
+            publisher="Rockstar Studios",
+            title="tmp-6",
             description="tmp",
             age_rating=17,
-        ))
+        )
+    )
+    for i in range(2, 4):
+        session.add(
+            GamesRepository(
+                publisher="Ubisoft",
+                title=f"tmp-{i}",
+                description="tmp",
+                age_rating=17,
+            )
+        )
     await session.commit()
-    
+
     response = await client.get(
         app.url_path_for("games:list-games"), params={"publisher": publisher}
     )
@@ -164,9 +161,7 @@ async def test_filtering_with_limit_and_offset(
         )
         session.add(game)
     await session.commit()
-    full_response = await client.get(
-        app.url_path_for("games:list-games")
-    )
+    full_response = await client.get(app.url_path_for("games:list-games"))
     all_games = ListOfGamesInResponse(**full_response.json())
 
     response = await client.get(

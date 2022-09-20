@@ -3,7 +3,7 @@ from app.models.schemas.users import UserFilters
 from app.models.schemas.users import (
     DEFAULT_USERS_LIMIT,
     DEFAULT_USERS_OFFSET,
-    UserFilters
+    UserFilters,
 )
 from fastapi import Query, Depends, Path, HTTPException
 from starlette import status
@@ -11,6 +11,7 @@ from app.db.repositories.users import UsersRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.resources import strings
 from .database import get_db
+
 
 def get_user_filters(
     name: Optional[str] = None,
@@ -25,7 +26,10 @@ def get_user_filters(
         offset=offset,
     )
 
-async def get_user_by_id(id: int = Path(..., ge=1), db: AsyncSession = Depends(get_db)) -> UsersRepository:
+
+async def get_user_by_id(
+    id: int = Path(..., ge=1), db: AsyncSession = Depends(get_db)
+) -> UsersRepository:
     user = await db.get(UsersRepository, id)
     if not user:
         raise HTTPException(

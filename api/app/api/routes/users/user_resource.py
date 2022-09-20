@@ -13,8 +13,7 @@ from app.models.schemas.users import (
     UserFilters,
     UserInCreate,
     UserInResponse,
-    UserInUpdate
-
+    UserInUpdate,
 )
 from app.resources import strings
 from app.services.users import check_user_exists, get_users_by_filters
@@ -26,10 +25,11 @@ router = APIRouter()
 @router.get("", response_model=ListOfUsersInResponse, name="users:list-users")
 async def list_users(
     user_filters: UserFilters = Depends(get_user_filters),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> ListOfUsersInResponse:
     users = await get_users_by_filters(db, user_filters.dict(exclude_none=True))
     return ListOfUsersInResponse(users=users, count=len(users))
+
 
 @router.post(
     "",
@@ -39,17 +39,18 @@ async def list_users(
 )
 async def create_new_user(
     user_create: UserInCreate = Body(..., embed=True, alias="user"),
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ) -> UserInResponse:
     if await check_user_exists(db, user_create.name):
-         raise HTTPException(
-             status_code=status.HTTP_400_BAD_REQUEST,
-             detail=strings.USER_ALREADY_EXISTS,
-         )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=strings.USER_ALREADY_EXISTS,
+        )
     user = UsersRepository(**user_create.dict())
     db.add(user)
     await db.commit()
     return UserInResponse(user=user)
+
 
 @router.get("/{id}", response_model=UserInResponse, name="users:get-user")
 async def get_user(
@@ -66,10 +67,10 @@ async def get_user(
 async def update_user_by_id(
     user_update: UserInUpdate = Body(..., embed=True, alias="user"),
     user: UsersRepository = Depends(get_user_by_id),
-    db: AsyncSession = Depends(get_db)
-) -> UserInResponse: 
+    db: AsyncSession = Depends(get_db),
+) -> UserInResponse:
     for key, value in user_update.dict(exclude_unset=True).items():
-            setattr(user, key, value)
+        setattr(user, key, value)
     db.add(user)
     await db.commit()
     await db.refresh(user)
@@ -83,8 +84,7 @@ async def update_user_by_id(
     response_class=Response,
 )
 async def delete_user_by_slug(
-    user: User = Depends(get_user_by_id),
-    db: AsyncSession = Depends(get_db)
-) -> None: 
+    user: User = Depends(get_user_by_id), db: AsyncSession = Depends(get_db)
+) -> None:
     await db.delete(user)
     await db.commit()
