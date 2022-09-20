@@ -6,16 +6,19 @@ from rich import logging
 
 
 def json_config_settings_source(settings: BaseSettings) -> dict[str, AnyStr]:
-    config_file_name = 'config.json'
+    config_file_name = "config.json"
     try:
-        with open(Path(config_file_name), 'r') as f:
+        with open(Path(config_file_name), "r") as f:
             return json.load(f)
     except FileNotFoundError:
-        logging.get_console().log("Warning: No configuration file found loading configuration from environment")
+        logging.get_console().log(
+            "Warning: No configuration file found loading configuration from environment"
+        )
         return {}
 
+
 class Config(BaseSettings):
-    api_url:  AnyHttpUrl = Field(..., env='API_URL')
+    api_url: AnyHttpUrl = Field(..., env="API_URL")
 
     class Config:
         @classmethod
@@ -25,8 +28,4 @@ class Config(BaseSettings):
             env_settings,
             file_secret_settings,
         ):
-            return (
-                init_settings,
-                env_settings,
-                json_config_settings_source
-            )
+            return (init_settings, env_settings, json_config_settings_source)

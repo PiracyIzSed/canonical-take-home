@@ -1,4 +1,3 @@
-
 def test_version(runner, app):
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
